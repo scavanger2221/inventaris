@@ -1,2 +1,2 @@
 # inventaris
- invetariws
+ 
