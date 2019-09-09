@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Produk
+      Barang
       <small>Control panel</small>
     </h1>
     <ol class="breadcrumb">
@@ -20,7 +20,7 @@
 
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Daftar Produk</h3>
+        <h3 class="box-title">Daftar Barang</h3>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -33,11 +33,8 @@
               <th>ID Produk</th>
               <th>Kategori</th>
               <th>Nama Produk</th>
-              <th>Deskripsi</th>
-              <th>Ukuran</th>
               <th>Harga</th>
-              <th>Stok</th>
-              <th>Gambar</th>
+              <th>Jumlah</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -48,27 +45,25 @@
               ?>
               <tr>
                 <td><?php echo $no++ ?></td>
-                <td><?php echo $u->id_barang ?></td>
+                <td><?php echo $u->id ?></td>
                 
-                <td><?php echo $u->nama_kategori ?></td>
+                <td><?php echo $u->kategori ?></td>
                 <td><?php echo $u->nama_barang ?></td>
-                <td><?php echo $u->deskripsi ?></td>
-                <td><?php echo $u->ukuran_brg ?></td>
-                <td><?php echo $u->harga_brg ?></td>
-                <td><?php echo $u->stok ?></td>
-                <td><img src="<?php echo base_url('gambar/'.$u->gambar) ?>" width="100" height="100"></td>
+                <td><?php echo $u->harga ?></td>
+                <td><?php echo $u->jumlah ?></td>
+               
                 <td><?php echo "
-                            <a class='btn btn-danger hapus' data-kode='".$u->id_barang."' >Hapus</a>  
+                            <a class='btn btn-danger hapus' data-kode='".$u->id."' >Hapus</a>  
                             <a 
                             href='javascript:;'
-                            data-kode='".$u->id_barang."'
+                            data-kode='".$u->id."'
                             data-nama='".$u->nama_barang."'
-                            data-deskripsi='".$u->deskripsi."'
-                            data-ukuran='".$u->ukuran_brg."'
-                            data-harga='".$u->harga_brg."'
-                            data-berat_brg='".$u->berat_brg."'
-                            data-kodeKategori='".$u->id_kategori."'
-                            data-namaKategori='".$u->nama_kategori."'
+                        
+                  
+                            data-harga='".$u->harga."'
+                            data-jumlah='".$u->jumlah."' 
+                            data-kodeKategori='".$u->kode_kategori."'
+                            data-namaKategori='".$u->kategori."'
                             <button  data-toggle='modal' data-target='#modal-edit' class='btn btn-info'>Ubah</button></a>"
                   ?></td>
               </tr>
@@ -101,61 +96,47 @@
 
         <div class="form-validation-box">
           <div class="form-wrap">
+          <?php echo form_open_multipart('DataMaster/tambah_produk'); ?>
+              <div class="form-group">
+                <label>ID Kategori</label><span class="text-danger">*</span>
+                <select class="form-control select2" style="width: 100%;" name="kodeKategori" id="kodeKategori">
+                  <option value="" selected="selected">Silakan Pilih</option>
+                  <?php
+                  foreach ($kategori as $t) {
+                    echo "
+                      <option value='".$t->kode."'>$t->kategori</option>";
+                  }
+                  ?>
+                </select>
 
-            <?php echo form_open_multipart('DataMaster/tambah_produk'); ?>
-            <!-- <div class="form-group">
-              <label>ID Produk</label><span class="text-danger">*</span>
-              <input name="kodeProduk" type="text" class="form-control" id="kodeProduk" tabindex="1" autofocus placeholder="Masukkan kode kategori anda" required="" />
-            </div> -->
-            <div class="form-group">
-              <label>ID Kategori</label><span class="text-danger">*</span>
-              <select class="form-control select2" style="width: 100%;" name="kodeKategori" id="kodeKategori">
-                <option value="" selected="selected">Silakan Pilih</option>
-                <?php
-                foreach ($kategori as $t) {
-                  echo "
-                    <option value='".$t->kodeKategori."'>$t->nama_kategori</option>";
-                }
-                ?>
-              </select>
-
-            </div>
-            <div class="form-group">
-              <label>Nama Produk</label><span class="text-danger">*</span>
-              <input name="nama" type="text" class="form-control" id="nama" tabindex="1" autofocus placeholder="Masukkan produk anda" required="" />
-            </div>
-            <div class="form-group">
-              <label>Deskripsi</label><span class="text-danger">*</span>
-              <input name="deskripsi" type="text" class="form-control" id="deskripsi" tabindex="1" autofocus placeholder="Masukkan deskripsi anda" required="" />
-            </div>
-            <div class="form-group">
-              <label>Ukuran</label><span class="text-danger">*</span>
-              <input name="ukuran" type="text" class="form-control" id="ukuran" tabindex="1" autofocus placeholder="Masukkan ukuran barang" required="" />
-            </div>
-            <div class="form-group">
-              <label>Harga</label><span class="text-danger">*</span>
-              <input name="harga" type="text" class="form-control" id="harga" tabindex="1" autofocus placeholder="Masukkan harga " required="" />
-            </div>
-            <div class="form-group">
-              <label>Berat</label><span class="text-danger">*</span>
-              <input name="berat" type="text" class="form-control" id="berat" tabindex="1" autofocus placeholder="Masukkan berat " required="" />
-            </div>
-            <div class="form-group">
-              <label>Gambar</label><span class="text-danger">*</span>
-              <input type="file" name="usefile"/>
+              </div>
+              <div class="form-group">
+                <label>Nama Barang</label><span class="text-danger">*</span>
+                <input name="kodes" type="hidden" class="form-control" id="kodes" placeholder="Masukkan produk anda"  />
+                <input name="nama" type="text" class="form-control" id="nama" tabindex="1" autofocus placeholder="Masukkan produk anda" required="" />
+              </div>
+         
+             
+              <div class="form-group">
+                <label>Harga</label><span class="text-danger">*</span>
+                <input name="harga" type="text" class="form-control" id="harga" tabindex="1" autofocus placeholder="Masukkan harga " required="" />
+              </div>
+              <div class="form-group">
+                <label>Jumlah</label><span class="text-danger">*</span>
+                <input name="jumlah" type="text" class="form-control" id="jumlah" tabindex="1" autofocus placeholder="Masukkan harga " required="" />
+              </div>
            
-            </div>
-            <p>&nbsp;</p>
+            
 
           </div>
           <div class="modal-footer">
-            <!-- Beri id "btn-simpan" untuk tombol simpan nya -->
-            <button type="button" class="btn btn-info" data-dismiss="modal">Batal</button>
-            <input type="submit" class="btn btn-danger" value="Simpan" name="Submit" tabindex="3" />
+              <!-- Beri id "btn-simpan" untuk tombol simpan nya -->
+              <button type="button" class="btn btn-info" data-dismiss="modal">Batal</button>
+              <input type="submit" class="btn btn-danger" value="Simpan" name="Submit" tabindex="3" />
 
           </div>
           <?php echo form_close(); ?>
-        </div>
+      </div>
       </div>
     </div>
   </div>
@@ -182,38 +163,29 @@
                             <?php
                             foreach ($kategori as $t) {
                               echo "
-                                <option value='".$t->kodeKategori."'>$t->nama_kategori</option>";
+                                <option value='".$t->kode."'>$t->kategori</option>";
                             }
                             ?>
                           </select>
 
                         </div>
                         <div class="form-group">
-                          <label>Nama Produk</label><span class="text-danger">*</span>
-                          <input name="kodes" type="hidden" class="form-control" id="kodes" placeholder="Masukkan produk anda"  />
+                          <label>Nama Barang</label><span class="text-danger">*</span>
+                          <input name="kodes" type="hidden" class="form-control" id="kode" placeholder="Masukkan produk anda"  />
                           <input name="nama" type="text" class="form-control" id="nama" tabindex="1" autofocus placeholder="Masukkan produk anda" required="" />
                         </div>
-                        <div class="form-group">
-                          <label>Deskripsi</label><span class="text-danger">*</span>
-                          <input name="deskripsi" type="text" class="form-control" id="deskripsi" tabindex="1" autofocus placeholder="Masukkan deskripsi anda" required="" />
-                        </div>
-                        <div class="form-group">
-                          <label>Ukuran</label><span class="text-danger">*</span>
-                          <input name="ukuran" type="text" class="form-control" id="ukuran" tabindex="1" autofocus placeholder="Masukkan ukuran barang" required="" />
-                        </div>
+                   
+                       
                         <div class="form-group">
                           <label>Harga</label><span class="text-danger">*</span>
                           <input name="harga" type="text" class="form-control" id="harga" tabindex="1" autofocus placeholder="Masukkan harga " required="" />
                         </div>
                         <div class="form-group">
-                          <label>Berat</label><span class="text-danger">*</span>
-                          <input name="berat" type="text" class="form-control" id="berat" tabindex="1" autofocus placeholder="Masukkan berat " required="" />
+                          <label>Jumlah</label><span class="text-danger">*</span>
+                          <input name="jumlah" type="text" class="form-control" id="jumlah" tabindex="1" autofocus placeholder="Masukkan harga " required="" />
                         </div>
-                        <div class="form-group">
-                          <label>Gambar</label><span class="text-danger">*</span>
-                          <input type="file" name="usefile"/>
+                     
                       
-                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -240,10 +212,9 @@
 	            // Isi nilai pada field
                 modal.find('#kode').attr("value",div.data('kode'));
                 modal.find('#nama').attr("value",div.data('nama'));
-                modal.find('#deskripsi').attr("value",div.data('deskripsi'));
-                modal.find('#ukuran').attr("value",div.data('ukuran'));
-                modal.find('#berat').attr("value",div.data('berat_brg'));
-                modal.find('#harga').attr("value",div.data('harga'));
+    
+                modal.find('#harga').attr("value",div.data('harga'));   
+                modal.find('#jumlah').attr("value",div.data('jumlah'));
                 // modal.find('#kodeKategori').append($("<option>kategoris</option>").attr("value",div.data('kategori').text(value));
        
                 modal.find('#kodeKategori').prepend("<option value='"+div.data('kodekategori')+"' selected>"+div.data('namakategori')+"</option>").attr('value',"bla bla bla");

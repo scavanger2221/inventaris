@@ -44,12 +44,16 @@
                             <tr>
                             <td><?php echo $no++ ?></td>
                             <td><?php echo $u->username ?></td>
-                            <td><?php echo $u->status ?></td>
+                            <td> <?php if($u->admin){
+                                echo "Admin"; }else{
+                                    echo "User";
+                                }
+                            ?></td>
                             <td><?php echo "
-                                        <a class='btn btn-danger hapus' id='hapus' data-kode='".$u->id_user."'>Hapus</a>  
+                                        <a class='btn btn-danger hapus' id='hapus' data-kode='".$u->id."'>Hapus</a>  
                                         <a 
                                         href='javascript:;'
-                                        data-id='".$u->id_user."'
+                                        data-id='".$u->id."'
                                         data-username='".$u->username."'
                                         <button  data-toggle='modal' data-target='#modal-edit' class='btn btn-info'>Ubah</button></a>"
                             ?></td>

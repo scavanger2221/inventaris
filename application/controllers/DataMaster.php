@@ -58,17 +58,17 @@ class DataMaster extends CI_Controller {
 
 	{
 
-		$data['user'] = $this->MDataMaster->getTable("tb_user")->result();
+		$data['user'] = $this->MDataMaster->getTable("user")->result();
 
-        $this->load->view('admin/top-header');
+        $this->load->view('top-header');
 
-        $this->load->view('admin/sidebar');
+        $this->load->view('sidebar');
 
-        $this->load->view('admin/user', $data);
+        $this->load->view('user', $data);
 
-        $this->load->view('admin/control-sidebar');
+        $this->load->view('control-sidebar');
 
-        $this->load->view('admin/footer');
+        $this->load->view('footer');
 
 	}
 
@@ -88,30 +88,15 @@ class DataMaster extends CI_Controller {
 
 			'username' => $username,
 
+			'nama' => $nama,	
+			'alamat' => $alamat,
 			'password' => md5($password),
 
-			'status' => "Admin"
+			'admin' => "1"
 
 			);
 
-			
-
-		$iduser = $this->MDataMaster->input_data($data,'tb_user');
-
-
-
-		$data2 = array(
-
-			'nama_admin' => $nama,
-
-			'alamat_admin' => $alamat,
-
-			'id_user' => $iduser
-
-			);
-
-			$this->MDataMaster->input_data($data2,'tb_admin');
-
+		$iduser = $this->MDataMaster->input_data($data,'user');
 		redirect('DataMaster');
 
 	}
@@ -128,22 +113,28 @@ class DataMaster extends CI_Controller {
 
 	}
 	function hapus_user($id){
-		$where ="WHERE id_user = '".$id."'";
-		$this->MDataMaster->hapus_id($where, 'tb_user');
+		$where ="WHERE id = '".$id."'";
+		$this->MDataMaster->hapus_id($where, 'user');
 		redirect('DataMaster');
 	}
 
 	function edit_kategori(){
 		$id = $this->input->post('kode');
 		$nama = $this->input->post('nama');
-		$this->MDataMaster->edit_kategori($id, $nama);
+
+		$data = array('kode' => $id,
+				 	  'kategori' =>$nama,	 
+					 );
+
+		$where = array('id' => $id, );			 
+		$this->MDataMaster->edit_data($data, $where, 'kategori');
 		redirect('DataMaster/vKategori');
 	}
 
 	function hapus_kategori($id){
 	
-		$where ="WHERE kodeKategori = '".$id."'";
-		$this->MDataMaster->hapus_id($where, 'tb_kategori');
+		$where ="WHERE kode = '".$id."'";
+		$this->MDataMaster->hapus_id($where, 'kategori');
 		redirect('DataMaster/vKategori');
 	}
 
@@ -153,16 +144,12 @@ class DataMaster extends CI_Controller {
 		$nama = $this->input->post('nama');
 		$kode = $this->input->post('kode');
 		$data = array(
-
-			'nama_kategori' => $nama,
-
-			'kodeKategori' => $kode,
-
+			'kategori' => $nama,
+			'kode' => $kode,
 			);
 
-			
-
-		$iduser = $this->MDataMaster->input_data($data,'tb_kategori');
+		
+		$iduser = $this->MDataMaster->input_data($data,'kategori');
 
 
 
@@ -176,144 +163,100 @@ class DataMaster extends CI_Controller {
 
 
 
-
-
-
-
-
 	function tambah_produk(){
 
 		 // setting konfigurasi upload
-        $config['upload_path'] = './gambar/';
-        $config['allowed_types'] = 'gif|jpg|png|jpeg';
-        // load library upload
-        $this->load->library('upload', $config);
-        if (!$this->upload->do_upload('usefile')) {
-            $error = $this->upload->display_errors();
-            // menampilkan pesan error
-            print_r($error);
-        } else {
-            $result = $this->upload->data();
+        // $config['upload_path'] = './gambar/';
+        // $config['allowed_types'] = 'gif|jpg|png|jpeg';
+        // // load library upload
+        // $this->load->library('upload', $config);
+        // if (!$this->upload->do_upload('usefile')) {
+        //     $error = $this->upload->display_errors();
+        //     // menampilkan pesan error
+        //     print_r($error);
+        // } else {
+        //     $result = $this->upload->data();
 			// $kodeProduk = $this->input->post('kodeProduk');
 		$kodeKategori = $this->input->post('kodeKategori');
 		$nama = $this->input->post('nama');
-		$deskripsi = $this->input->post('deskripsi');
-		$gambar = $this->input->post('gambar');
-		$ukuran = $this->input->post('ukuran');
+
 		$harga = $this->input->post('harga');
+		$jumlah = $this->input->post('jumlah');
 		$data = array(
 
 			// 'id_barang' => $kodeProduk,
-			'id_kategori' => $kodeKategori,
+			'kode_kategori' => $kodeKategori,
 			'nama_barang' => $nama,
-			'deskripsi' => $deskripsi,
-			'ukuran_brg' => $ukuran,
-			'harga_brg' => $harga,
-			'gambar' => $result['file_name']
+			'harga' => $harga,
+			'jumlah' => $jumlah,
+			// 'gambar' => $result['file_name']
 			);
-		$this->MDataMaster->input_data($data,'tb_barang');
+		$this->MDataMaster->input_data($data,'barang');
 		redirect('DataMaster/vProduk');
-        }
+       
 	}
 
 	function edit_produk(){
-		
-				// setting konfigurasi upload
-				$config['upload_path'] = './gambar/';
-				$config['allowed_types'] = 'gif|jpg|png|jpeg';
-				// load library upload
-				$this->load->library('upload', $config);
-				
-		$gambar = $this->input->post('usefile');
-		$kodeKategori = $this->input->post('kodeKategori');
-		$kodeProduk = $this->input->post('kodes');
-		$nama = $this->input->post('nama');
-		$deskripsi = $this->input->post('deskripsi');
-		$ukuran = $this->input->post('ukuran');
-		$berat = $this->input->post('berat');
-		$harga = $this->input->post('harga');
-		if($gambar <> ''){
-			
-				if (!$this->upload->do_upload('usefile')) {
-					$error = $this->upload->display_errors();
-					// menampilkan pesan error
-					print_r($error);
-				} else {
-			
-					$result = $this->upload->data();
-					if($result){
-					// $kodeProduk = $this->input->post('kodeProduk');
-		 
-					 $data = array(
-		 
-						 'id_barang' => $kodeProduk,
-						 'id_kategori' => $kodeKategori,
-						 'nama_barang' => $nama,
-						 'deskripsi' => $deskripsi,
-						 'ukuran_brg' => $ukuran,
-						 'harga_brg' => $harga,
-						 'berat_brg' => $berat,
-						 'gambar' => $result['file_name']
-						 );
-						 }else {
-		 
-						 }
-		 
-		 
-				$this->MDataMaster->edit_produk($data,'1');
-				redirect('DataMaster/vProduk');
-				}
-		}else{
-			$data = array(
-		 
-				'id_barang' => $kodeProduk,
-				'id_kategori' => $kodeKategori,
-				'nama_barang' => $nama,
-				'deskripsi' => $deskripsi,
-				'ukuran_brg' => $ukuran,
-				'berat_brg' => $berat,
-				'harga_brg' => $harga
-				
-				);
-				$this->MDataMaster->edit_produk($data,'0');
-				redirect('DataMaster/vProduk');
-		}
 	
+		$kodeKategori = $this->input->post('kodeKategori');
+		$id_barang = $this->input->post('kodes');
+		$nama = $this->input->post('nama');
+		$harga = $this->input->post('harga');
+		$jumlah = $this->input->post('jumlah');
+	
+			$data = array(
+				'kode_kategori' => $kodeKategori,
+				'nama_barang' => $nama,
+				'harga' => $harga,
+				'jumlah' => $jumlah,
+				);
+			
+			$where = array('id' => $id_barang , );	
+
+				$this->MDataMaster->edit_data($data, $where, 'barang');
+				// redirect('DataMaster/vProduk');
+			
+				
+				$str = $this->db->last_query();
+
+				echo $str;
+
+				print_r($data);
    }
 
 	
 	public function vkategori()
 	{
-		$data['kategori'] = $this->MDataMaster->getTable('tb_kategori')->result();
-        $this->load->view('admin/top-header');
-        $this->load->view('admin/sidebar');
-        $this->load->view('admin/kategori', $data);
+		$data['kategori'] = $this->MDataMaster->getTable('kategori')->result();
+        $this->load->view('top-header');
+        $this->load->view('sidebar');
+        $this->load->view('kategori', $data);
 
-        $this->load->view('admin/control-sidebar');
+        $this->load->view('control-sidebar');
 
-        $this->load->view('admin/footer');
+        $this->load->view('footer');
 
 	}
 
 
 
 	public function vProduk()
-
+	//view Produk
 	{
 
-		$data['produk'] = $this->MDataMaster->getUser()->result();
+		$data['produk'] = $this->MDataMaster->getBarang()->result();
 
-		$data['kategori'] = $this->MDataMaster->getTable('tb_kategori')->result();
+		$data['kategori'] = $this->MDataMaster->getTable('kategori')->result();
 
-        $this->load->view('admin/top-header');
+        $this->load->view('top-header');
 
-        $this->load->view('admin/sidebar');
+        $this->load->view('sidebar');
 
-        $this->load->view('admin/produk', $data);
+        $this->load->view('produk', $data);
 
-        $this->load->view('admin/control-sidebar');
+        $this->load->view('control-sidebar');
 
-        $this->load->view('admin/footer');
+        $this->load->view('footer');
 
 	}
 

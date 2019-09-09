@@ -43,14 +43,14 @@
 		?>
                 <tr>
                   <td><?php echo $no++ ?></td>
-                  <td><?php echo $u->kodeKategori ?></td>
-                  <td><?php echo $u->nama_kategori ?></td>
+                  <td><?php echo $u->kode ?></td>
+                  <td><?php echo $u->kategori ?></td>
                   <td><?php echo "
-                            <a class='btn btn-danger hapus'   data-kode='".$u->kodeKategori."' >Hapus</a>  
+                            <a class='btn btn-danger hapus'   data-kode='".$u->kode."' >Hapus</a>  
                             <a 
                             href='javascript:;'
-                            data-kode='".$u->kodeKategori."'
-                            data-nama='".$u->nama_kategori."'
+                            data-kode='".$u->kode."'
+                            data-nama='".$u->kategori."'
                             <button  data-toggle='modal' data-target='#modal-edit' class='btn btn-info'>Ubah</button></a>"
                   ?></td>
                 </tr>

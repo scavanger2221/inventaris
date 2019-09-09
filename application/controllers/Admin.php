@@ -42,7 +42,7 @@ class Admin extends CI_Controller {
 
 		parent::__construct();		
 
-		$this->load->model('MAuth');
+		// $this->load->model('MAuth');
 
 		// $this->load->helper('url');
 
@@ -56,16 +56,15 @@ class Admin extends CI_Controller {
 	public function index()
 
 	{
+        $this->load->view('top-header');
 
-        $this->load->view('admin/top-header');
+        $this->load->view('sidebar');
 
-        $this->load->view('admin/sidebar');
+        $this->load->view('dashboard');
 
-        $this->load->view('admin/dashboard');
+        $this->load->view('control-sidebar');
 
-        $this->load->view('admin/control-sidebar');
-
-        $this->load->view('admin/footer');
+        $this->load->view('footer');
 
 	}
 

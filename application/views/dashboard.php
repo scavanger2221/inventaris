@@ -83,7 +83,7 @@
 
       <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Pesanan Yang Belum Transfer</h3>
+              <h3 class="box-title">Barang Baru</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -132,12 +132,12 @@
               </table>
             </div>
 </div>
-            <div class="box">
+            <!-- <div class="box">
             <div class="box-header">
               <h3 class="box-title">Pesanan Yang Belum Dikirim</h3>
-            </div>
+            </div> -->
             <!-- /.box-header -->
-            <div class="box-body">
+            <!-- <div class="box-body">
               <table id="example3" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -181,7 +181,7 @@
            
                 </tfoot>
               </table>
-            </div>
+            </div> -->
             <!-- /.box-body -->
 
     </section>
