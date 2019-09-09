@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2019 at 11:41 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 5.6.36
+-- Generation Time: Sep 09, 2019 at 02:57 PM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -41,7 +41,32 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id`, `kode_kategori`, `nama_barang`, `harga`, `jumlah`) VALUES
-(1, '002', 'test product1', 10000, 10);
+(1, '001', 'Laptops', 1200000, 1),
+(2, '001', 'Laptop', 1200000, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cicilan`
+--
+
+CREATE TABLE `cicilan` (
+  `id_cicilan` int(11) NOT NULL,
+  `id_barang` int(11) NOT NULL,
+  `tgl_cicilan` date NOT NULL,
+  `lama` int(11) NOT NULL,
+  `jumlah_beli` int(11) NOT NULL,
+  `harga_satuan` int(11) NOT NULL,
+  `harga_total` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `cicilan`
+--
+
+INSERT INTO `cicilan` (`id_cicilan`, `id_barang`, `tgl_cicilan`, `lama`, `jumlah_beli`, `harga_satuan`, `harga_total`) VALUES
+(2, 2, '2019-09-09', 12, 199, 2000000, 1000000),
+(3, 1, '2019-09-01', 11, 1, 211312, 123123);
 
 -- --------------------------------------------------------
 
@@ -61,8 +86,7 @@ CREATE TABLE `kategori` (
 
 INSERT INTO `kategori` (`id`, `kode`, `kategori`) VALUES
 (1, '001', 'asdf'),
-(2, '002', 'test'),
-(3, '001', 'test123');
+(2, '002', 'test');
 
 -- --------------------------------------------------------
 
@@ -75,7 +99,7 @@ CREATE TABLE `user` (
   `username` varchar(20) NOT NULL,
   `nama` varchar(30) NOT NULL,
   `alamat` varchar(200) NOT NULL,
-  `admin` tinyint(1) NOT NULL DEFAULT '0',
+  `admin` tinyint(1) NOT NULL DEFAULT 0,
   `password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -97,6 +121,12 @@ ALTER TABLE `barang`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `cicilan`
+--
+ALTER TABLE `cicilan`
+  ADD PRIMARY KEY (`id_cicilan`);
+
+--
 -- Indexes for table `kategori`
 --
 ALTER TABLE `kategori`
@@ -116,7 +146,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `cicilan`
+--
+ALTER TABLE `cicilan`
+  MODIFY `id_cicilan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kategori`
