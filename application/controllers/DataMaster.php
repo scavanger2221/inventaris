@@ -214,14 +214,10 @@ class DataMaster extends CI_Controller {
 			$where = array('id' => $id_barang , );	
 
 				$this->MDataMaster->edit_data($data, $where, 'barang');
-				// redirect('DataMaster/vProduk');
+				redirect('DataMaster/vProduk');
 			
 				
-				$str = $this->db->last_query();
-
-				echo $str;
-
-				print_r($data);
+				
    }
 
 	
@@ -260,10 +256,52 @@ class DataMaster extends CI_Controller {
 
 	}
 
+	public function vCicilan()
+	{
+
+		$data['produk']= $this->MDataMaster->getCicilan();
+		$data['barang']= $this->MDataMaster->getBarang()->result();
+		$data['q']=$this->db->last_query();
+
+		$this->load->view('top-header');
+
+        $this->load->view('sidebar');
+
+        $this->load->view('cicilan',$data);
+
+        $this->load->view('control-sidebar');
+
+        $this->load->view('footer');
+	}
+
+	public function edit_cicilan()
+	{
+		$kode_barang=$this->input->post('kodeBarang');
+		$tgl=$this->input->post('tanggalBeli');
+		$harga_satuan=$this->input->post('hargaSatuan');
+		$harga_bayar=$this->input->post('hargaBayar');
+		$lama=$this->input->post('lama');
+		$jumlah=$this->input->post('jumlah');
+		$id_cicil=$this->input->post('idCicilan');
+		
+		$where = array(
+				'id_cicilan' => $id_cicil,
+		);
+
+		$data=array(
+			"id_barang" => $kode_barang,
+			"tgl_cicilan" => $tgl,
+			"harga_satuan" => $harga_satuan,
+			"harga_total" => $harga_bayar,
+			"lama" => $lama,
+			"jumlah_beli" => $jumlah,
+		);
 
 
+		$this->MDataMaster->edit_data($data,$where,"cicilan");
+		redirect("DataMaster/vCicilan");
 
-
+	}
 	
 
 }

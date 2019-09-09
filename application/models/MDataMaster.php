@@ -83,8 +83,16 @@ class MDataMaster extends CI_Model{
         
                 $this->db->query("DELETE FROM $table $WHERE");
         }
-
         
+        public function getCicilan(){
+                $a=$this->db->query("SELECT * FROM cicilan LEFT JOIN barang ON cicilan.id_barang=barang.id LEFT JOIN kategori
+                 ON barang.kode_kategori = kategori.id");
+                return $a->result();
+        }
+
+        public function setCicilan($datas,$id_cicilan){
+                $this->db->update('cicilan',$datas,$id_cicilan);
+        }
 
 }
 
