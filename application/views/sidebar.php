@@ -68,14 +68,14 @@
             <li><a href="<?php echo base_url().'Pembayaran/vPembayaran' ?>"><i class="fa fa-money"></i> Pembayaran Cicilan</a></li>
 
        
-
+<!-- 
             <li><a href="<?php echo base_url().'Transaksi/vStok' ?>"><i class="fa fa-shopping-bag"></i> Stok</a></li>
 
             <li><a href="<?php echo base_url().'Transaksi/vPemesanan' ?>"><i class="fa fa-shopping-cart"></i> Pemesanan</a></li>
-            <li><a href="<?php echo base_url().'Transaksi/vDataInvoice' ?>"><i class="fa fa-sticky-note"></i> Data Invoice</a></li>
+            <li><a href="<?php echo base_url().'Transaksi/vDataInvoice' ?>"><i class="fa fa-sticky-note"></i> Data Invoice</a></li> -->
 
           
-
+<!-- 
         <li class="treeview">
 
           <a href="#">
@@ -100,7 +100,7 @@
 
           </ul>
 
-        </li>
+        </li> -->
 
        
 
