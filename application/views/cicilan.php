@@ -20,7 +20,7 @@
 
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Daftar Barang</h3>
+        <h3 class="box-title">Daftar Cicilan</h3>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -35,6 +35,7 @@
               <th>Tanggal Beli</th>
               <th>Lama (Bulan)</th>
               <th>Jumlah</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -52,11 +53,15 @@
                 <td><?php echo $u->tgl_cicilan ?></td>
                 <td><?php echo $u->lama ?></td>
                 <td><?php echo $u->jumlah_beli ?></td>
+                <td><?php if ($u->sisa_bayar <= 0) {
+                        echo "<p class='text-success'><b>LUNAS</b></p>";
+                      } else {
+                        echo "<p class='text-danger'>Belum Lunas</p>";
+                      }  ?></td>
 
                 <td><?php
                       $btnEdit = "<a 
                     href='javascript:;'
-                    data-kode='" . $u->id . "'
                     data-id-cicilan='" . $u->id_cicilan . "'
                     data-kode-barang='" . $u->id_barang . "'
                     data-harga-satuan='" . $u->harga_satuan . "'
@@ -109,7 +114,7 @@
                 <option value="">Silakan Pilih</option>
                 <?php
                 foreach ($barang as $t) {
-                  echo "<option data-harga='".$t->harga."' value='" . $t->id . "'>$t->nama_barang</option>";
+                  echo "<option data-harga='" . $t->harga . "' value='" . $t->id . "'>$t->nama_barang</option>";
                 }
                 ?>
               </select>
@@ -135,7 +140,7 @@
 
             <div class="form-group">
               <label>Jumlah</label><span class="text-danger">*</span>
-              <input name="jumlahAdd" type="text" class="form-control" id="jumlahAdd" tabindex="1" autofocus placeholder="Masukkan Jumlah Beli " required="" />
+              <input name="jumlahAdd" type="text" class="form-control" id="jumlahAdd" tabindex="1" autofocus placeholder="Masukkan Jumlah Beli " required="" onkeyup="return count_price();" />
             </div>
 
             <div class="form-group">
@@ -257,18 +262,25 @@
     });
   });
 
-  function fill_data(){
+  function fill_data() {
     var kode_barang = document.getElementById('kodeBarangAdd');
 
-    var index_selected=kode_barang.options[kode_barang.selectedIndex];
-    
+    var index_selected = kode_barang.options[kode_barang.selectedIndex];
+
     var text_box_harga = document.getElementById('hargaSatuanAdd');
 
-    var harga= index_selected.getAttribute("data-harga");
+    var harga = index_selected.getAttribute("data-harga");
 
-    text_box_harga.value= harga;
-  }
+    text_box_harga.value = harga;
+  };
 
+  function count_price() {
+    var txtJumlah = document.getElementById('jumlahAdd');
+    var txtTotalBayar = document.getElementById('hargaBayarAdd');
+    var txtPrice = document.getElementById('hargaSatuanAdd');
+
+    txtTotalBayar.value = (txtPrice.value) * (txtJumlah.value);
+  };
 
   $(".hapus").click(function(e) {
     e.preventDefault();
@@ -294,6 +306,5 @@
 
       }
     })
-
   });
 </script>

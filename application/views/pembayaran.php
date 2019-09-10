@@ -20,7 +20,7 @@
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="box-body">
-                <a class="btn btn-success" href="<?php echo base_url("Pembayaran/vHistoryBayar"); ?>">Lihat semua history cicilan</a>
+                    <a class="btn btn-success" href="<?php echo base_url("Pembayaran/vHistoryBayar"); ?>">Lihat semua history cicilan</a>
 
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -50,9 +50,12 @@
                                     <td><?php echo $u->sisa_bayar ?></td>
                                     <td>
                                         <?php
+                                            $textBtnTerbayar = "Terbayar";
+                                            if ($u->sisa_bayar <= 0)
+                                                $textBtnTerbayar = "LUNAS";
                                             $btnBayar = "<button  data-toggle='modal' data-target='#modal-edit' class='btn btn-info'>Bayar</button></a>";
                                             if ($u->is_paid)
-                                                $btnBayar = "<button class='btn btn-danger' disabled=''>Terbayar</button></a>";
+                                                $btnBayar = "<button class='btn btn-danger' disabled=''>$textBtnTerbayar</button></a>";
                                             echo "
                                         <a href='javascript:;'
                                         data-id-cicilan='" . $u->id_cicilan . "'

@@ -256,7 +256,7 @@ class DataMaster extends CI_Controller {
 	public function vCicilan()
 	{
 
-		$data['produk']= $this->MDataMaster->getCicilan();
+		$data['produk']= $this->MDataMaster->getCicilan2();
 		$data['barang']= $this->MDataMaster->getBarang()->result();
 		$data['q']=$this->db->last_query();
 

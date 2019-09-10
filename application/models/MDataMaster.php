@@ -70,11 +70,28 @@ class MDataMaster extends CI_Model
                 $this->db->query("DELETE FROM $table $WHERE");
         }
 
-        public function getCicilan()
+        public function getCicilan2()
         {
+                // $a = $this->db->query("SELECT cicilan.*,kategori.*,barang.*, (SELECT EXISTS(SELECT id_bayar FROM pembayaran WHERE pembayaran.id_cicilan=cicilan.id_cicilan)) as is_uneditable FROM cicilan LEFT JOIN barang ON cicilan.id_barang=barang.id LEFT JOIN kategori
+                //  ON barang.kode_kategori = kategori.kode");
+
+                 $a=$this->db->query("SELECT cicilan.*,kategori.kategori as kategori , barang.nama_barang,
+                 (SELECT EXISTS(SELECT id_bayar FROM pembayaran WHERE pembayaran.id_cicilan=cicilan.id_cicilan)) as is_uneditable,
+                 (cicilan.lama-
+                 (SELECT COUNT(id_bayar)FROM pembayaran WHERE pembayaran.id_cicilan=cicilan.id_cicilan)) as sisa_bulan,
+                 (cicilan.harga_total-
+                 (IFNULL((SELECT SUM(bayar) FROM pembayaran WHERE pembayaran.id_cicilan=cicilan.id_cicilan),0))) as sisa_bayar,
+                 (SELECT EXISTS(SELECT id_bayar FROM pembayaran WHERE MONTH(tgl_bayar)=MONTH(CURDATE()) AND pembayaran.id_cicilan=cicilan.id_cicilan)) as is_paid
+                 FROM cicilan LEFT JOIN barang ON 
+                         cicilan.id_barang=barang.id LEFT JOIN kategori
+                         ON barang.kode_kategori = kategori.kode ORDER BY tgl_cicilan DESC ");
+                return $a->result();
+        }
+
+        public function getCicilan(){
                 $a = $this->db->query("SELECT cicilan.*,kategori.*,barang.*, (SELECT EXISTS(SELECT id_bayar FROM pembayaran WHERE pembayaran.id_cicilan=cicilan.id_cicilan)) as is_uneditable FROM cicilan LEFT JOIN barang ON cicilan.id_barang=barang.id LEFT JOIN kategori
                  ON barang.kode_kategori = kategori.kode");
-                return $a->result();
+                return $a-result();
         }
 
         public function setCicilan($datas, $id_cicilan)
