@@ -316,7 +316,7 @@ class DataMaster extends CI_Controller {
 			"lama" => $lama,
 			"jumlah_beli" => $jumlah,
 		);
-		$this->MDataMaster->input_data($data,"cicilan");
+		$this->MDataMaster->beli_barang($data);
 		redirect('DataMaster/vCicilan');
 	}
 

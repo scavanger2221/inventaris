@@ -105,11 +105,11 @@
             <?php echo form_open_multipart('DataMaster/add_cicilan') ?>
             <div class="form-group">
               <label>Barang</label><span class="text-danger">*</span>
-              <select class="form-control select2" style="width: 100%;" name="kodeBarangAdd" id="kodeBarangAdd">
+              <select class="form-control select2" style="width: 100%;" name="kodeBarangAdd" id="kodeBarangAdd" onChange="return fill_data()">
                 <option value="">Silakan Pilih</option>
                 <?php
                 foreach ($barang as $t) {
-                  echo "<option value='" . $t->id . "'>$t->nama_barang</option>";
+                  echo "<option data-harga='".$t->harga."' value='" . $t->id . "'>$t->nama_barang</option>";
                 }
                 ?>
               </select>
@@ -122,13 +122,9 @@
             </div>
 
             <div class="form-group">
-              <label>Harga Satuan</label><span class="text-danger">*</span>
+              <label>Harga Satuan </label><span class="text-danger">*</span>
+              <i class="fa fa-exclamation-circle text-warning">Jika harga satuan berbeda dengan harga sebelumnya maka data barang akan diupdate otomatis</i>
               <input name="hargaSatuanAdd" type="number" class="form-control" id="hargaSatuanAdd" tabindex="1" autofocus placeholder="Masukkan harga satuan " required="" />
-            </div>
-
-            <div class="form-group">
-              <label>Harga Bayar</label><span class="text-danger">*</span>
-              <input name="hargaBayarAdd" type="number" class="form-control" id="hargaBayarAdd" tabindex="1" autofocus placeholder="Masukkan harga bayar" required="" />
             </div>
 
             <div class="form-group">
@@ -140,6 +136,11 @@
             <div class="form-group">
               <label>Jumlah</label><span class="text-danger">*</span>
               <input name="jumlahAdd" type="text" class="form-control" id="jumlahAdd" tabindex="1" autofocus placeholder="Masukkan Jumlah Beli " required="" />
+            </div>
+
+            <div class="form-group">
+              <label>Harga Bayar</label><span class="text-danger">*</span>
+              <input name="hargaBayarAdd" type="number" class="form-control" id="hargaBayarAdd" tabindex="1" autofocus placeholder="Masukkan harga bayar" required="" />
             </div>
 
 
@@ -255,6 +256,18 @@
       modal.find('#kodeKategori').prepend("<option value='" + div.data('kodekategori') + "' selected>" + div.data('namakategori') + "</option>").attr('value', "bla bla bla");
     });
   });
+
+  function fill_data(){
+    var kode_barang = document.getElementById('kodeBarangAdd');
+
+    var index_selected=kode_barang.options[kode_barang.selectedIndex];
+    
+    var text_box_harga = document.getElementById('hargaSatuanAdd');
+
+    var harga= index_selected.getAttribute("data-harga");
+
+    text_box_harga.value= harga;
+  }
 
 
   $(".hapus").click(function(e) {
