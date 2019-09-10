@@ -214,10 +214,7 @@ class DataMaster extends CI_Controller {
 			$where = array('id' => $id_barang , );	
 
 				$this->MDataMaster->edit_data($data, $where, 'barang');
-				redirect('DataMaster/vProduk');
-			
-				
-				
+				redirect('DataMaster/vProduk');	
    }
 
 	
@@ -302,7 +299,32 @@ class DataMaster extends CI_Controller {
 		redirect("DataMaster/vCicilan");
 
 	}
-	
+
+	public function add_cicilan(){
+		$kode_barang=$this->input->post('kodeBarangAdd');
+		$tgl=$this->input->post('tanggalBeliAdd');
+		$harga_satuan=$this->input->post('hargaSatuanAdd');
+		$harga_bayar=$this->input->post('hargaBayarAdd');
+		$lama=$this->input->post('lamaAdd');
+		$jumlah=$this->input->post('jumlahAdd');	
+
+		$data=array(
+			"id_barang" => $kode_barang,
+			"tgl_cicilan" => $tgl,
+			"harga_satuan" => $harga_satuan,
+			"harga_total" => $harga_bayar,
+			"lama" => $lama,
+			"jumlah_beli" => $jumlah,
+		);
+		$this->MDataMaster->input_data($data,"cicilan");
+		redirect('DataMaster/vCicilan');
+	}
+
+	public function remove_cicilan($id_cicilan){
+		$where="WHERE id_cicilan=$id_cicilan";
+		$this->MDataMaster->hapus_id($where,"cicilan");
+		redirect("DataMaster/vCicilan");
+	}
 
 }
 

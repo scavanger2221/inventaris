@@ -85,8 +85,8 @@ class MDataMaster extends CI_Model{
         }
         
         public function getCicilan(){
-                $a=$this->db->query("SELECT * FROM cicilan LEFT JOIN barang ON cicilan.id_barang=barang.id LEFT JOIN kategori
-                 ON barang.kode_kategori = kategori.id");
+                $a=$this->db->query("SELECT cicilan.*,kategori.*,barang.*, (SELECT EXISTS(SELECT id_bayar FROM pembayaran WHERE pembayaran.id_cicilan=cicilan.id_cicilan)) as is_uneditable FROM cicilan LEFT JOIN barang ON cicilan.id_barang=barang.id LEFT JOIN kategori
+                 ON barang.kode_kategori = kategori.kode");
                 return $a->result();
         }
 
@@ -95,5 +95,3 @@ class MDataMaster extends CI_Model{
         }
 
 }
-
-?>

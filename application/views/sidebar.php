@@ -63,7 +63,9 @@
             <li><a href="<?php echo base_url().'DataMaster/vKategori' ?>"><i class="fa fa-clone"></i> Kategori</a></li>
 
             <li><a href="<?php echo base_url().'DataMaster/vProduk' ?>"><i class="fa fa-laptop"></i> Produk</a></li>
-            <li><a href="<?php echo base_url().'DataMaster/vCicilan' ?>"><i class="fa fa-file"></i> Cicilan</a></li>
+            <li><a href="<?php echo base_url().'DataMaster/vCicilan' ?>"><i class="fa fa-file"></i> Cicilan & Pembelian</a></li>
+
+            <li><a href="<?php echo base_url().'Pembayaran/vPembayaran' ?>"><i class="fa fa-money"></i> Pembayaran Cicilan</a></li>
 
        
 
