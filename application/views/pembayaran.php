@@ -57,7 +57,7 @@
                                             if ($u->is_paid)
                                                 $btnBayar = "<button class='btn btn-danger' disabled=''>$textBtnTerbayar</button></a>";
                                             echo "
-                                        <a href='javascript:;'
+                                        <a href='#'
                                         data-id-cicilan='" . $u->id_cicilan . "'
                                         data-bayar-bulanan='" . ($u->harga_total / $u->lama) . "'
                                         $btnBayar
